@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
+// MySQL DETAILS
 const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost'
 const MYSQL_USER = process.env.MYSQL_USER || 'root'
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || ''
@@ -16,6 +16,7 @@ const MYSQL = {
 }
 
 
+// SERVER DETAILS
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost'
 const SERVER_PORT = process.env.SERVER_PORT || 8080
 

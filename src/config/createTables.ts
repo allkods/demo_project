@@ -2,7 +2,7 @@ import {Connect, Execute } from "./mysql";
 
 const exec = ()=>{
 
-      // Creating database and tables if not exists
+      // Creating tables if not exists
         //databse
         Connect()
         .then(connection => {
