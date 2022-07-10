@@ -1,7 +1,7 @@
 // importing express
 import express, {Application} from 'express';
 import config from './config/config';
-import createTables from './config/createTables'
+import dbInit from './database/init';
 
 //importing controllers
 import homeController  from './controllers/home';
@@ -35,5 +35,6 @@ app.listen(config.server.port,()=> console.log("server is running"));
 
 
 //generating database tables
-createTables()
+dbInit();
+
 

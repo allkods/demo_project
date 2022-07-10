@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { Connect, Get } from "../config/mysql";
+import { authenticate } from "../database/dal/users";
+import Users, { UsersInput, UsersOutput } from "../database/models/Users";
 
 
 const view = (req: Request,res: Response,next: NextFunction)=>{
@@ -13,44 +14,26 @@ const post = (req: Request,res: Response,next: NextFunction)=>{
 
     const { email, password } = req.body;
 
-    Connect()
-    .then(connection =>{
+    authenticate( { email:email, password:password } )
+    .then(data => {
 
-        const query = 'SELECT * FROM users WHERE email=?;';
-        Get(connection,query,[email])
-        .then(result =>{
+        res.json({
+            status:"success",
+            data:data
+        });
 
-      
-            if(result.length >0){
-
-                if(result[0].password == password){
-                    return res.json({Login : "success"})
-                }               
-                else{
-                    return res.redirect('/login?error=password')
-                }
-            }
-            else{
-                return res.redirect('/login?error=email')
-            }
-
-        })
-        .catch(error =>{
-            return res.status(500).json({
-                message:error.message,
-                error
-            })
-        })
-        .finally(()=>{
-            connection.end();
-        })
     })
     .catch(error =>{
-        return res.status(500).json({
-            message:error.message,
-            error
-        })
+        
+        if(error == "NotFound"){
+            res.redirect('/login?error=email')
+        }
+        else if(error == "InvalidPassword"){
+            res.redirect('/login?error=password')
+        }
     })
+
+
 
 }
 
