@@ -1,30 +1,33 @@
-
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelize from "../connection"
-import Exams from './Exams';
+import Colleges from './Colleges';
 
-const Users = sequelize.define('users',{
+const College_Addresses = sequelize.define('college_addresses',{
     id:{
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement : true,
         allowNull : false,
         primaryKey : true
     },
-    email:{
+    state:{
         type : DataTypes.STRING,
-        allowNull : false
-    },
-    password:{
-        type : DataTypes.STRING,
-        allowNull : false
-    },
-    examId:{
-        type: DataTypes.INTEGER.UNSIGNED,
-        references: {model:'exams',key:'id'}
-    },
-    type:{
-        type:DataTypes.CHAR(1),
         allowNull: false
+    },
+    city:{
+        type : DataTypes.STRING,
+        allowNull : false
+    },
+    pin:{
+        type : DataTypes.CHAR(6),
+        allowNull : false
+    },
+    landmark:{
+        type : DataTypes.STRING,
+        allowNull : false
+    },
+    cid:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        references: {model:'colleges',key:'id'}
     }
 },
 {
@@ -32,6 +35,6 @@ timestamps:true,
 paranoid:true,
 });
 
-Exams.hasOne(Users,{foreignKey:'examId'});
+Colleges.hasOne(College_Addresses,{foreignKey:'cid'});
 
-export default Users
+export default College_Addresses

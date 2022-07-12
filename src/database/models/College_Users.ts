@@ -1,9 +1,7 @@
-
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import sequelize from "../connection"
-import Exams from './Exams';
 
-const Users = sequelize.define('users',{
+const College_Users = sequelize.define('college_users',{
     id:{
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement : true,
@@ -18,20 +16,13 @@ const Users = sequelize.define('users',{
         type : DataTypes.STRING,
         allowNull : false
     },
-    examId:{
-        type: DataTypes.INTEGER.UNSIGNED,
-        references: {model:'exams',key:'id'}
-    },
     type:{
         type:DataTypes.CHAR(1),
         allowNull: false
     }
 },
 {
-timestamps:true,
-paranoid:true,
+timestamps:true
 });
 
-Exams.hasOne(Users,{foreignKey:'examId'});
-
-export default Users
+export default College_Users

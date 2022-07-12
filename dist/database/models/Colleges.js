@@ -5,33 +5,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../connection"));
-const Exams_1 = __importDefault(require("./Exams"));
-const Users = connection_1.default.define('users', {
+const College_Users_1 = __importDefault(require("./College_Users"));
+const Colleges = connection_1.default.define('colleges', {
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    email: {
+    uniqid: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    },
+    name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    image: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
-    examId: {
+    uid: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
-        references: { model: 'exams', key: 'id' }
-    },
-    type: {
-        type: sequelize_1.DataTypes.CHAR(1),
-        allowNull: false
+        references: { model: 'college_users', key: 'id' }
     }
 }, {
     timestamps: true,
     paranoid: true,
 });
-Exams_1.default.hasOne(Users, { foreignKey: 'examId' });
-exports.default = Users;
+College_Users_1.default.hasOne(Colleges, { foreignKey: 'uid' });
+exports.default = Colleges;

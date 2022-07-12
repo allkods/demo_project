@@ -6,7 +6,7 @@ dotenv.config();
 const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost';
 const MYSQL_USER = process.env.MYSQL_USER || 'root';
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '';
-const MYSQL_DATABASE = process.env.MYSQL_HOST || 'demo';
+const MYSQL_DATABASE = process.env.MYSQL_HOST || 'logica';
 const DIALECT = process.env.DB_DRIVER || 'mysql';
 
 const MYSQL = {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <style>
+            .tile{
+                display: flex;
+                flex-direction: column;
+                width: 300px;
+            }
+            .tile>img{
+                height: 100px;
+                width: 100px;
+            }
+            .tile>*{
+                margin: 5px 0;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="uploadQuestions">
+
+            <h1>Upload Questions</h1>
+
+            <form action="/college/exam/<%= exam.uniqid %>" method="POST" enctype="multipart/form-data" >
+                <select name="qualification">
+                    <option value="ug">under graduate</option>
+                    <option value="pg">post graduate</option>
+                </select>
+                <select name="participation">
+                    <option value="coding">coding</option>
+                    <option value="cyber">cyber security</option>
+                </select>
+                <input type="file" name="file" />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button>upload</button>
+            </form>
+
+        </div>
+
+    </body>
+</html>

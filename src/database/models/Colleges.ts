@@ -1,30 +1,29 @@
-
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelize from "../connection"
-import Exams from './Exams';
+import College_Users from './College_Users';
 
-const Users = sequelize.define('users',{
+const Colleges = sequelize.define('colleges',{
     id:{
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement : true,
         allowNull : false,
         primaryKey : true
     },
-    email:{
+    uniqid:{
+        type : DataTypes.STRING,
+        allowNull: true
+    },
+    name:{
         type : DataTypes.STRING,
         allowNull : false
     },
-    password:{
+    image:{
         type : DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
-    examId:{
+    uid:{
         type: DataTypes.INTEGER.UNSIGNED,
-        references: {model:'exams',key:'id'}
-    },
-    type:{
-        type:DataTypes.CHAR(1),
-        allowNull: false
+        references: {model:'college_users',key:'id'}
     }
 },
 {
@@ -32,6 +31,6 @@ timestamps:true,
 paranoid:true,
 });
 
-Exams.hasOne(Users,{foreignKey:'examId'});
+College_Users.hasOne(Colleges,{foreignKey:'uid'});
 
-export default Users
+export default Colleges

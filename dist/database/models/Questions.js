@@ -6,32 +6,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../connection"));
 const Exams_1 = __importDefault(require("./Exams"));
-const Users = connection_1.default.define('users', {
+const Questions = connection_1.default.define('questions', {
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    email: {
+    question: {
+        type: sequelize_1.DataTypes.STRING(3000),
+        allowNull: false
+    },
+    a: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    b: {
         type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    c: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    d: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    answer: {
+        type: sequelize_1.DataTypes.CHAR(2),
+        allowNull: false
+    },
+    marks: {
+        type: sequelize_1.DataTypes.STRING(5),
         allowNull: false
     },
     examId: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         references: { model: 'exams', key: 'id' }
-    },
-    type: {
-        type: sequelize_1.DataTypes.CHAR(1),
-        allowNull: false
     }
 }, {
-    timestamps: true,
-    paranoid: true,
+    timestamps: true
 });
-Exams_1.default.hasOne(Users, { foreignKey: 'examId' });
-exports.default = Users;
+Exams_1.default.hasMany(Questions, { foreignKey: 'examId' });
+exports.default = Questions;
