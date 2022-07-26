@@ -16,10 +16,14 @@ const post = (req: any,res: Response,next: NextFunction)=>{
 
         const { draw, start, length, order, columns, search } = req.body;
 
+        // preparing query for ordering
+
         // if(!order){
 
         //     var column_name = 'categories';
         //     var column_sort_order = 'DESC';
+
+        //     var ordered:any = [column_name,column_sort_order]
 
         // }else{
 
@@ -27,11 +31,26 @@ const post = (req: any,res: Response,next: NextFunction)=>{
         //      var column_name:string = columns[column_index].data;
         //      var column_sort_order:string = order[0]['dir'].toUpperCase();
 
+        //      if(column_name == 'categories'){
+        //         var ordered:any = [column_name,column_sort_order]
+        //      }else{
+        //         var ordered:any = column_name == 'companies' ?
+        //      [{model:Vehicle_Companies,as:'companies'},"companies",column_sort_order] :
+        //      [{model:Vehicle_Companies,as:'companies',order:[[{model:Vehicle_Models,as:'models'},"models",column_sort_order]]},"companies",column_sort_order]
+
+        //      }    
+
         // }
 
 
         // fetching data from vehicle_categories table
         const data:any = await Vehicle_Categories.findAll({
+            where:{[Op.or] : [
+                { categories : { [Op.like] : `%${search.value}%` } },
+                 { "$companies.companies$" : { [Op.like] : `%${search.value}%` } },
+                 { "$companies.models.models$" : { [Op.like] : `%${search.value}%` } }
+            ] },
+
             include:[
             {
                 model: Vehicle_Companies,
@@ -43,7 +62,9 @@ const post = (req: any,res: Response,next: NextFunction)=>{
                     required:true
                 }]
             }
-        ]});
+        ]
+        
+    });
 
         
         // preparing single json array from data
@@ -67,25 +88,13 @@ const post = (req: any,res: Response,next: NextFunction)=>{
         }
 
 
-        // filtering array according to search query
-        const filteredData = finalData.filter(searchFilter);
-
-        function searchFilter(data:any){
-
-            return data.categories.toLowerCase().includes(search.value.toLowerCase()) ||
-                    data.companies.toLowerCase().includes(search.value.toLowerCase()) ||
-                    data.models.toLowerCase().includes(search.value.toLowerCase())
-
-        }
-
-
         // limiting array
-        const rangedData = filteredData.slice(start,start+length);
+        const rangedData = finalData.slice(start,start+length);
 
 
     // declaring response object
     const totalRecords = finalData.length;
-    const totalrecWithFilter = filteredData.length;
+    const totalrecWithFilter = finalData.length;
 
     const output = {
         draw : draw,
