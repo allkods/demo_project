@@ -6,8 +6,14 @@ dotenv.config();
 const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost';
 const MYSQL_USER = process.env.MYSQL_USER || 'root';
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '';
-const MYSQL_DATABASE = process.env.MYSQL_HOST || 'logica';
+const MYSQL_DATABASE = process.env.MYSQL_HOST || 'table_demo';
 const DIALECT = process.env.DB_DRIVER || 'mysql';
+
+// const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost';
+// const MYSQL_USER = process.env.MYSQL_USER || 'allkodsi_logica';
+// const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || 'doctor@1989';
+// const MYSQL_DATABASE = process.env.MYSQL_HOST || 'allkodsi_logica';
+// const DIALECT = process.env.DB_DRIVER || 'mysql';
 
 const MYSQL = {
     host : MYSQL_HOST,
@@ -20,7 +26,7 @@ const MYSQL = {
 
 // SERVER DETAILS
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost'
-const SERVER_PORT = process.env.SERVER_PORT || 8080
+const SERVER_PORT = process.env.SERVER_PORT || 8000
 
 const SERVER = {
     hostname : SERVER_HOSTNAME,

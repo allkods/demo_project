@@ -1,8 +1,7 @@
 import sequelize from "./connection";
-import College_Users from "./models/College_Users"
-import Colleges from "./models/Colleges"
-import College_Addresses from "./models/College_Addresses";
-import Exams from "./models/Exams";
+import Vehicle_Categories from "./models/Categories";
+import Vehicle_Companies from "./models/Companies";
+import Vehicle_Models from "./models/Models";
 
 const dbInit = ()=>{
 
@@ -14,36 +13,85 @@ const dbInit = ()=>{
         // Inserting hard coded data to database
 
         (async ()=>{
-            const cu:any = await College_Users.create({
-                email:'sahilrajkashyap4@gmail.com',
-                password : '$2a$10$oUZGqfqf6YvZVTQ5knd/JO2DUisws.9q.FWlgaSNo5GAzKISB9Oi.', // use 1234 as password while login
-                type : '1'
-            });
-    
-            const college:any = await Colleges.create({
-                uniqid:"2154785212",
-                name:"Sinhgad Institute of Management And Computer Application",
-                image:"/images/colleges/225412.jpeg",
-                uid:cu.id
-            });
+           
+            const Categories:any = await Vehicle_Categories.bulkCreate([
+                {categories:'car'},
+                {categories:'bike'}
+            ]);
 
-            const add:any = await College_Addresses.create({
-                state:"maharashtra",
-                city:"pune",
-                pin:"411041",
-                landmark:"Opposite Bank of Maharashtra, Narhe",
-                cid:college.id
-            });
+            const carCompanies:any =await Vehicle_Companies.bulkCreate([
+                {
+                    companies: 'honda',
+                    cat_id: Categories[0].id
+                },
+                {
+                    companies: 'hyundai',
+                    cat_id: Categories[0].id
+                }
+            ]);
 
-            const exam:any = await Exams.create({
-                uniqid:"225478",
-                name:"logica",
-                image:"/images/exams/025461.jpg",
-                starting : new Date("2022-07-15 12:01:01"),
-                duration : "120",
-                cid:college.id
-            });
+            const bikeCompanies:any =await Vehicle_Companies.bulkCreate([
+                {
+                    companies: 'tvs',
+                    cat_id: Categories[1].id
+                },
+                {
+                    companies: 'yamaha',
+                    cat_id: Categories[1].id
+                }
+            ]);
 
+         
+            const models:any =await Vehicle_Models.bulkCreate([
+                {
+                    models: '2016',
+                    com_id: carCompanies[0].id
+                },
+                {
+                    models: '2018',
+                    com_id: carCompanies[0].id
+                },
+                {
+                    models: '2020',
+                    com_id: carCompanies[0].id
+                },
+                {
+                    models: '2016',
+                    com_id: carCompanies[1].id
+                },
+                {
+                    models: '2018',
+                    com_id: carCompanies[1].id
+                },
+                {
+                    models: '2020',
+                    com_id: carCompanies[1].id
+                },
+                {
+                    models: '2016',
+                    com_id: bikeCompanies[0].id
+                },
+                {
+                    models: '2018',
+                    com_id: bikeCompanies[0].id
+                },
+                {
+                    models: '2020',
+                    com_id: bikeCompanies[0].id
+                },
+                {
+                    models: '2016',
+                    com_id: bikeCompanies[1].id
+                },
+                {
+                    models: '2018',
+                    com_id: bikeCompanies[1].id
+                },
+                {
+                    models: '2020',
+                    com_id: bikeCompanies[1].id
+                }
+            ]);
 
         })();
 
